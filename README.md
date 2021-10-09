@@ -2,4 +2,4 @@
 
 Terrible Perl to get noaa weather and tides for fishing spots. 
 
-![Anchore Container Scan](https://github.com/sabbene/docker-tides/workflows/Anchore%20Container%20Scan/badge.svg)
+![Anchore Container Scan](https://github.com/sabbene/0hy.es/workflows/Anchore%20Container%20Scan/badge.svg)
