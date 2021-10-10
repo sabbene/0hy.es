@@ -16,5 +16,6 @@ WORKDIR /app
 COPY ./app /app/
 
 EXPOSE 80
+EXPOSE 443
 
 CMD /app/bin/start.sh
