@@ -1,10 +1,10 @@
 FROM alpine:latest
 
 RUN apk update && apk upgrade
-RUN apk add perl perl-app-cpanminus perl-net-ssleay curl wget make nginx
+RUN apk add perl perl-dev perl-app-cpanminus nginx curl wget make gcc libc-dev openssl libressl-dev zlib zlib-dev
+RUN cpanm Carton
 
 ## build tides app dependencies
-RUN cpanm Carton
 RUN mkdir -p /app/src/tides/
 
 WORKDIR /app/src/tides/
