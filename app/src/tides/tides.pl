@@ -276,7 +276,7 @@ th, td {
     text-align: left;
 }
 </style>
-<title>0hy.es -- tides</title>
+<title>tides</title>
 
 <table style="width:100%">
 EOF
