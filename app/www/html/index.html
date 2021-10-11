@@ -5,32 +5,37 @@
         background-color: black;
       }
       .center {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 45%;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-64%, -50%);
+	 margin: auto;
+         width: 90%;
+         border: 3px;
+         padding: 10px;
+         text-align: center;
+	 #border: 3px solid red;
       }
       .boxes {
         position: absolute;
         bottom: 0px;
         display:table;
-        width: 100%;
+        width: 90%;
         height: 50px;
+	#border: 3px solid blue;
       }
       .box {
         display: table-cell;
-        text-align: -webkit-center;
         vertical-align:middle;
         line-height: normal;
-	width: -webkit-fill-available;
+	text-align: center;
+	#border: 3px solid yellow;
       }
       .box1 {
         align: left;
+	width: 33%;
+	#border: 3px solid green;
       }
       .box2 {
         align: right;
+	width: 33%;
+	#border: 3px solid orange;
       }
       p.pre {
         font-family: monospace;
