@@ -1,0 +1,7 @@
+name: Super Linter
+on: [push]
+jobs:
+  superlinter:
+    steps:
+      - name: Super-Linter
+        uses: github/super-linter@v4.8.1

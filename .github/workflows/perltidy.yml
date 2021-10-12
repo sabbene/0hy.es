@@ -1,4 +1,4 @@
-name: perl critic
+name: Perl Tidy
 on: [push]
 jobs:
   perltidy:
@@ -18,8 +18,3 @@ jobs:
         run: |
           shopt -s extglob globstar nullglob
           perltidy -b -bext='/' **/*.p[lm] **/*.t && git diff --exit-code
-  perlcritic:
-    runs-on: ubuntu-latest
-    steps:
-      - name: gugod-perlcritic (with reviewdog)
-        uses: gugod/action-perlcritic@fun
