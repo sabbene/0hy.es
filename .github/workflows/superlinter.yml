@@ -8,4 +8,5 @@ jobs:
         uses: github/super-linter@v4.8.1
         env:
           DEFAULT_BRANCH: master
+          USE_FIND_ALGORITHM=true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
