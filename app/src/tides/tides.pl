@@ -51,41 +51,33 @@ my %forcast_locations = (
 
 sub curl_get {
     my $url = shift;
+    my $retry_counter = shift || 0;
+
     my $ua  = Mojo::UserAgent->new;
+
 
     my $res = $ua->max_redirects(5)
                  ->get($url)->result;
+
     if ( $res->is_success ) {
         return $json->decode($res->body), 'nil';
     }
-    elsif ( $res->is_error ) {
-        return 'nil', $res->code . ' ' . $res->message;
+    elsif ( $retry_counter <= 5 ) {
+        curl_get($url, $retry_counter);
     }
-    #my $response_body;
+    elsif (( $retry_counter > 5 ) and ( $res->is_error )) {
+        my $err = sprintf "%d %s after %d attempts", $res->code, $res->message, $retry_counter;
+        return 'nil', $err;
+        #return 'nil', $res->code . ' ' . $res->message . 'after ' . $retry_count . ' tries';
+    }
 
-    #my $curl = WWW::Curl::Easy->new();
-
-    #$curl->setopt(CURLOPT_HEADER,0);
-    #$curl->setopt(CURLOPT_USERAGENT, 'Mozilla/5.0 (X11; Linux x86_64; rv:30.0) Gecko/20100101 Firefox/30.0');
-    #$curl->setopt(CURLOPT_WRITEDATA,\$response_body);
-
-    #$curl->setopt(CURLOPT_URL, $url);
-
-    #my $retcode       = $curl->perform;
-    #my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
-
-    #if ( $response_code =~ /^2\d+/smx ) {
-    #    return $json->decode($response_body), 'nil';
-    #}
-    #else {
-    #    return 'nil', $retcode.' '.$curl->strerror($retcode).' '.$curl->errbuf;
-    #}
+    return 'nil', 'you should never see this';
 }
 
 sub get_urls {
     my $loc = shift;
 
-    my ($response, $err) = curl_get($forcast_locations{$loc}->{base_url});
+    my ($response, $err) = curl_get($forcast_locations{$loc}->{base_url}, 0);
 
     if ( $err eq 'nil' ) {
         $forcast_locations{$loc}->{forcast_url}      = $response->{properties}->{forecast};
@@ -104,7 +96,7 @@ sub get_urls {
 sub get_current {
     my $loc = shift;
 
-    my ($response, $err) = curl_get($forcast_locations{$loc}->{forcast_grid_url});
+    my ($response, $err) = curl_get($forcast_locations{$loc}->{forcast_grid_url}, 0);
 
     if ( $err eq 'nil' ) {
         my $temp           = shift @{ $response->{properties}->{temperature}->{values} };
@@ -182,7 +174,7 @@ sub get_current {
 sub get_forecast {
     my $loc = shift;
 
-    my ($response, $err) = curl_get($forcast_locations{$loc}->{forcast_url});
+    my ($response, $err) = curl_get($forcast_locations{$loc}->{forcast_url}, 0);
 
     if ( $err eq 'nil' ) {
         my $forcast = shift @{ $response->{properties}->{periods} };
@@ -210,7 +202,7 @@ sub get_forecast {
 sub get_tides_forecast {
     my $loc = shift;
 
-    my ($response, $err) = curl_get($forcast_locations{$loc}->{tide_forcast_url});
+    my ($response, $err) = curl_get($forcast_locations{$loc}->{tide_forcast_url}, 0);
 
     if ( $err eq 'nil' ) {
         @{ $forcast_locations{$loc}->{tide_forcast} } = @{ $response->{predictions} };
@@ -228,7 +220,7 @@ sub get_alerts {
     my $loc = shift;
 	my @alerts;
 
-    my ($response, $err) = curl_get($forcast_locations{$loc}->{alerts_url});
+    my ($response, $err) = curl_get($forcast_locations{$loc}->{alerts_url}, 0);
 
 	if ( $err eq 'nil' ) {
         if ( scalar @{ $response->{features} }> 0 ) {
