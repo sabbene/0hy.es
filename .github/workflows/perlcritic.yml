@@ -1,2 +1,8 @@
-- name: gugod-perlcritic (with reviewdog)
-  uses: gugod/action-perlcritic@fun
+name: perl critic
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: gugod-perlcritic (with reviewdog)
+        uses: gugod/action-perlcritic@fun
