@@ -363,8 +363,8 @@ EOF
     }
     print <<EOF;
 <tr>
-    <th>Alerts</th>
 EOF
+    print '    <th rowspan="' . scalar @{ $forcast_locations{$loc}->{alerts} } . '">Alerts</th>';
     for my $alert ( @{ $forcast_locations{$loc}->{alerts} } ) {
         print <<EOF;
     <td colspan="4">@{$alert}</td>
