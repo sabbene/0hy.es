@@ -2,6 +2,7 @@ name: Super Linter
 on: [push]
 jobs:
   superlinter:
+    runs-on: ubuntu-latest
     steps:
       - name: Super-Linter
         uses: github/super-linter@v4.8.1
