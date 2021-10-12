@@ -3,8 +3,6 @@
 use strict;
 use warnings;
 
-our $VERSION = 1.0;
-
 use JSON;
 
 #use WWW::Curl::Easy;
@@ -155,15 +153,53 @@ sub get_current {
         if (    ( defined $current_weather->{coverage} )
             and ( defined $current_weather->{weather} ) )
         {
-            $forcast_locations{$loc}->{current}->{weather} = sprintf "%s %s",
-              $current_weather->{coverage}, $current_weather->{weather};
+            $forcast_locations{$loc}->{current}->{weather} =
+              $current_weather->{coverage} . ' ' . $current_weather->{weather};
         }
         else {
             $forcast_locations{$loc}->{current}->{weather} = '';
         }
 
-        $forcast_locations{$loc}->{current}->{windDirection} =
-          wind_direction( $precip->{value} );
+        if (
+               ( ( $precip->{value} ge 0 ) and ( $precip->{value} le 22.5 ) )
+            or ( ( $precip->{value} ge 337.5 ) and ( $precip->{value} le 360 ) )
+          )
+        {
+            $forcast_locations{$loc}->{current}->{windDirection} = 'North';
+        }
+        elsif ( ( $precip->{value} gt 22.5 ) and ( $precip->{value} le 67.5 ) )
+        {
+            $forcast_locations{$loc}->{current}->{windDirection} = 'Northeast';
+        }
+        elsif ( ( $precip->{value} gt 67.5 ) and ( $precip->{value} le 112.5 ) )
+        {
+            $forcast_locations{$loc}->{current}->{windDirection} = 'East';
+        }
+        elsif ( ( $precip->{value} gt 112.5 )
+            and ( $precip->{value} le 157.5 ) )
+        {
+            $forcast_locations{$loc}->{current}->{windDirection} = 'Southeast';
+        }
+        elsif ( ( $precip->{value} gt 157.5 )
+            and ( $precip->{value} le 202.5 ) )
+        {
+            $forcast_locations{$loc}->{current}->{windDirection} = 'South';
+        }
+        elsif ( ( $precip->{value} gt 202.5 )
+            and ( $precip->{value} le 247.5 ) )
+        {
+            $forcast_locations{$loc}->{current}->{windDirection} = 'Southwest';
+        }
+        elsif ( ( $precip->{value} gt 247.5 )
+            and ( $precip->{value} le 292.5 ) )
+        {
+            $forcast_locations{$loc}->{current}->{windDirection} = 'West';
+        }
+        elsif ( ( $precip->{value} gt 292.5 )
+            and ( $precip->{value} lt 337.5 ) )
+        {
+            $forcast_locations{$loc}->{current}->{windDirection} = 'Northwest';
+        }
 
         $forcast_locations{$loc}->{current}->{detailed} =
           sprintf
@@ -184,41 +220,6 @@ sub get_current {
         $forcast_locations{$loc}->{current}->{detailed} = 'nil';
     }
 
-    return;
-
-}
-
-sub wind_direction {
-    my $bearing = shift;
-
-    if (   ( ( $bearing ge 0 ) and ( $bearing le 22.5 ) )
-        or ( ( $bearing ge 337.5 ) and ( $bearing le 360 ) ) )
-    {
-        return 'North';
-    }
-    elsif ( ( $bearing gt 22.5 ) and ( $bearing le 67.5 ) ) {
-        return 'Northeast';
-    }
-    elsif ( ( $bearing gt 67.5 ) and ( $bearing le 112.5 ) ) {
-        return 'East';
-    }
-    elsif ( ( $bearing gt 112.5 ) and ( $bearing le 157.5 ) ) {
-        return 'Southeast';
-    }
-    elsif ( ( $bearing gt 157.5 ) and ( $bearing le 202.5 ) ) {
-        return 'South';
-    }
-    elsif ( ( $bearing gt 202.5 ) and ( $bearing le 247.5 ) ) {
-        return 'Southwest';
-    }
-    elsif ( ( $bearing gt 247.5 ) and ( $bearing le 292.5 ) ) {
-        return 'West';
-    }
-    elsif ( ( $bearing gt 292.5 ) and ( $bearing lt 337.5 ) ) {
-        return 'Northwest';
-    }
-
-    return 'UNKNOWN';
 }
 
 sub get_forecast {
@@ -271,8 +272,6 @@ sub get_tides_forecast {
           { t => 'nil', type => 'nil', v => 'nil' };
         $forcast_locations{$loc}->{tide_forcast_err} = $err;
     }
-
-    return;
 }
 
 sub get_alerts {
@@ -307,8 +306,6 @@ sub get_alerts {
         @{ $forcast_locations{$loc}->{alerts} } = @alerts;
         $forcast_locations{$loc}->{alerts_err} = $err;
     }
-
-    return;
 }
 
 for my $location ( keys %forcast_locations ) {

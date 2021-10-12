@@ -3,3 +3,5 @@ requires 'JSON';
 requires 'YAML';
 requires 'Data::Dump';
 requires 'IO::Socket::SSL';
+requires 'Perl::Critic';
+requires 'Perl::Tidy';
