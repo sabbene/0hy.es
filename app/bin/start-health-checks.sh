@@ -6,16 +6,16 @@ PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 now=$(date "+%s")
 one_hour_seconds='3600'
 
-function error_exit {
+error_exit() {
     echo "${1}"
     exit 1
 }
 
-function tides_checks {
+tides_checks() {
     tides_html_file='/app/www/html/tides/index.html'
 
     ## tides checks
-    if [[ ! -e "${tides_html_file}" ]]
+    if [ ! -e "${tides_html_file}" ]
     then
         error_exit "ERROR: File does not exist: ${tides_html_file}"
     else
@@ -29,7 +29,7 @@ function tides_checks {
     fi
 }
 
-function nginx_checks {
+nginx_checks() {
     if ! pgrep nginx 1>/dev/null 2>&1
     then
         error_exit 'ERROR: nginx not running'
@@ -43,7 +43,7 @@ function nginx_checks {
 
 while true
 do
-    tides_checks()
-    nginx_checks()
-    sleep 10m;
+    tides_checks
+    nginx_checks
+    sleep 10m
 done
