@@ -87,8 +87,6 @@ sub curl_get {
         return 'nil', $err;
     }
 
-e 'my $foo = 5; if ( $foo <= 5) { print "a\n"; } elsif ( $foo > 4 ) { print "b\n"; } else { print "c\n"; }'
-
     return 'nil', 'you should never see this';
 }
 
