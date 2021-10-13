@@ -78,15 +78,17 @@ sub curl_get {
         return $json->decode( $res->body ), 'nil';
     }
     elsif ( $retry_counter <= 5 ) {
+        $retry_counter++;
         curl_get( $url, $retry_counter );
     }
-    #elsif ( ( $retry_counter > 5 ) and ( $res->is_error ) ) {
     elsif ( $retry_counter > 5 ) {
-        my $err = sprintf "%d %s after %d attempts", $res->code, $res->message,
+        my $err = sprintf '%d %s after %d attempts', $res->code, $res->message,
           $retry_counter;
         return 'nil', $err;
     }
 
+    pp 'you should never see this';
+    pp $res;
     return 'nil', 'you should never see this';
 }
 
@@ -154,11 +156,11 @@ sub get_current {
         if (    ( defined $current_weather->{coverage} )
             and ( defined $current_weather->{weather} ) )
         {
-            $forcast_locations{$loc}->{current}->{weather} = sprintf "%s %s",
+            $forcast_locations{$loc}->{current}->{weather} = sprintf '%s %s',
               $current_weather->{coverage}, $current_weather->{weather};
         }
         else {
-            $forcast_locations{$loc}->{current}->{weather} = '';
+            $forcast_locations{$loc}->{current}->{weather} = q{};
         }
 
         $forcast_locations{$loc}->{current}->{windDirection} =
@@ -166,7 +168,7 @@ sub get_current {
 
         $forcast_locations{$loc}->{current}->{detailed} =
           sprintf
-"Now: %s %.0f and %s. Low around %.0f high of %.0f. %s wind %.0f mph, with gusts as high as %.0f mph. %.0f%s chance of rain.",
+'Now: %s %.0f and %s. Low around %.0f high of %.0f. %s wind %.0f mph, with gusts as high as %.0f mph. %.0f%s chance of rain.',
           $forcast_locations{$loc}->{current}->{weather},
           $forcast_locations{$loc}->{current}->{temperature},
           $forcast_locations{$loc}->{forcast}->{temperatureTrend} || 'steady',
@@ -176,7 +178,7 @@ sub get_current {
           $forcast_locations{$loc}->{current}->{windSpeed},
           $forcast_locations{$loc}->{current}->{windGust},
           $forcast_locations{$loc}->{current}->{probabilityOfPrecipitation},
-          '%';
+          q{%};
 
     }
     else {
@@ -190,30 +192,30 @@ sub get_current {
 sub wind_direction {
     my $bearing = shift;
 
-    if (   ( ( $bearing ge 0 ) and ( $bearing le 22.5 ) )
-        or ( ( $bearing ge 337.5 ) and ( $bearing le 360 ) ) )
+    if (   ( ( $bearing >= 0 ) and ( $bearing <= 22.5 ) )
+        or ( ( $bearing >= 337.5 ) and ( $bearing <= 360 ) ) )
     {
         return 'North';
     }
-    elsif ( ( $bearing gt 22.5 ) and ( $bearing le 67.5 ) ) {
+    elsif ( ( $bearing > 22.5 ) and ( $bearing <= 67.5 ) ) {
         return 'Northeast';
     }
-    elsif ( ( $bearing gt 67.5 ) and ( $bearing le 112.5 ) ) {
+    elsif ( ( $bearing > 67.5 ) and ( $bearing <= 112.5 ) ) {
         return 'East';
     }
-    elsif ( ( $bearing gt 112.5 ) and ( $bearing le 157.5 ) ) {
+    elsif ( ( $bearing > 112.5 ) and ( $bearing <= 157.5 ) ) {
         return 'Southeast';
     }
-    elsif ( ( $bearing gt 157.5 ) and ( $bearing le 202.5 ) ) {
+    elsif ( ( $bearing > 157.5 ) and ( $bearing <= 202.5 ) ) {
         return 'South';
     }
-    elsif ( ( $bearing gt 202.5 ) and ( $bearing le 247.5 ) ) {
+    elsif ( ( $bearing > 202.5 ) and ( $bearing <= 247.5 ) ) {
         return 'Southwest';
     }
-    elsif ( ( $bearing gt 247.5 ) and ( $bearing le 292.5 ) ) {
+    elsif ( ( $bearing > 247.5 ) and ( $bearing <= 292.5 ) ) {
         return 'West';
     }
-    elsif ( ( $bearing gt 292.5 ) and ( $bearing lt 337.5 ) ) {
+    elsif ( ( $bearing > 292.5 ) and ( $bearing < 337.5 ) ) {
         return 'Northwest';
     }
 
@@ -363,7 +365,9 @@ EOF
     print <<EOF;
 <tr>
 EOF
-    print '    <th rowspan="' . scalar @{ $forcast_locations{$loc}->{alerts} } . '">Alerts</th>';
+    print '    <th rowspan="'
+      . scalar @{ $forcast_locations{$loc}->{alerts} }
+      . '">Alerts</th>';
     for my $alert ( @{ $forcast_locations{$loc}->{alerts} } ) {
         print <<EOF;
     <td colspan="4">@{$alert}</td></tr>
