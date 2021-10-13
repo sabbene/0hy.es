@@ -80,13 +80,14 @@ sub curl_get {
     elsif ( $retry_counter <= 5 ) {
         curl_get( $url, $retry_counter );
     }
-    elsif ( ( $retry_counter > 5 ) and ( $res->is_error ) ) {
+    #elsif ( ( $retry_counter > 5 ) and ( $res->is_error ) ) {
+    elsif ( $retry_counter > 5 ) {
         my $err = sprintf "%d %s after %d attempts", $res->code, $res->message,
           $retry_counter;
         return 'nil', $err;
-
-#return 'nil', $res->code . ' ' . $res->message . 'after ' . $retry_count . ' tries';
     }
+
+e 'my $foo = 5; if ( $foo <= 5) { print "a\n"; } elsif ( $foo > 4 ) { print "b\n"; } else { print "c\n"; }'
 
     return 'nil', 'you should never see this';
 }
