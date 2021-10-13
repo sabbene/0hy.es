@@ -15,14 +15,14 @@ function tides_checks {
     tides_html_file='/app/www/html/tides/index.html'
     
     ## tides checks
-    if [[ ! -e "${tides_html_file}" ]]
+    if [ ! -e "${tides_html_file}" ]
     then
         error_exit "ERROR: gile does not exist: ${tides_html_file}"
     else
         tides_html_ctime=$(stat -c '%Y' "${tides_html_file}")
         tides_delta=$(expr "${now}" - "${tides_html_ctime}")
     
-        if [[ "${tides_delta}" -ge "${one_hour_seconds}" ]]
+        if [ "${tides_delta}" -ge "${one_hour_seconds}" ]
         then
             error_exit 'ERROR: tides has not updated in more than 1 hour'
         fi
@@ -43,7 +43,7 @@ function nginx_checks {
 
 while true
 do
-    tides_checks()
-    nginx_checks()
-    sleep 10m;
+    tides_checks
+    nginx_checks
+    sleep 10m
 done
