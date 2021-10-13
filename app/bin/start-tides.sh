@@ -8,14 +8,14 @@ prod_file='/app/www/html/tides/index.html'
 
 
 echo LOADING > "${prod_file}"
-echo $(date +"%Y-%m-%dT%H:%M:%S%z") >> "${prod_file}"
+date +"%Y-%m-%dT%H:%M:%S%z" >> "${prod_file}"
 
 while true;
 do
     cd /app/src/tides
     carton run ./tides.pl > "${tmp_file}";
 
-    if [[ -s "${tmp_file}" ]]
+    if [ -s "${tmp_file}" ]
     then
         ts=$(date +"%Y-%m-%dT%H:%M:%S%z")
         cat "${tmp_file}" > "${prod_file}"
