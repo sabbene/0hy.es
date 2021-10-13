@@ -20,7 +20,7 @@ tides_checks() {
         error_exit "ERROR: gile does not exist: ${tides_html_file}"
     else
         tides_html_ctime=$(stat -c '%Y' "${tides_html_file}")
-        tides_delta=$(( "${now}" - "${tides_html_ctime}" ))
+        let tides_delta="${now} - ${tides_html_ctime}"
     
         if [ "${tides_delta}" -ge "${one_hour_seconds}" ]
         then
