@@ -77,11 +77,11 @@ sub curl_get {
     if ( $res->is_success ) {
         return $json->decode( $res->body ), 'nil';
     }
-    elsif ( $retry_counter <= 5 ) {
+    elsif (( ! $res->is_success ) and ( $retry_counter <= 5 )) {
         $retry_counter++;
         curl_get( $url, $retry_counter );
     }
-    elsif ( $retry_counter > 5 ) {
+    elsif (( ! $res->is_success ) and ( $retry_counter > 5 )) {
         my $err = sprintf '%d %s after %d attempts', $res->code, $res->message,
           $retry_counter;
         return 'nil', $err;
@@ -321,14 +321,17 @@ for my $location ( keys %forcast_locations ) {
 }
 
 print <<EOF;
+<!DOCTYPE html>
 <style>
 body {
   color: #ddd;
   background-color: #333;
-  link-color: rgb(0, 188, 212);
-  main-headline-color: rgb(233, 30, 99);
-  accent-background-color: rgb(0, 188, 212);
-  accent-color: rgb(5, 5, 5);
+}
+a {
+  color: #9E9EFF;
+}
+a:visited{
+  color: #D0ADF0;
 }
 table, th, td {
     border: 1px solid grey;
