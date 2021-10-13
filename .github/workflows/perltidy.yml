@@ -17,4 +17,4 @@ jobs:
         shell: bash
         run: |
           shopt -s extglob globstar nullglob
-          perltidy -b -bext='/' **/*.p[lm] **/*.t && git diff --exit-code
+          perltidy -b -bext='/' -- **/*.p[lm] **/*.t && git diff --exit-code
