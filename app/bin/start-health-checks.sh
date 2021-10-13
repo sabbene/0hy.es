@@ -20,12 +20,12 @@ function tides_checks {
         error_exit "ERROR: File does not exist: ${tides_html_file}"
     else
         tides_html_ctime=$(stat -c '%Y' "${tides_html_file}")
-        #tides_delta=$(expr "${now}" - "${tides_html_ctime}")
+        tides_delta=$(expr "${now}" - "${tides_html_ctime}")
 
-        #if [[ "${tides_delta}" -ge "${one_hour_seconds}" ]]
-        #then
-        #    error_exit 'ERROR: tides has not updated in more than 1 hour'
-        #fi
+        if [[ "${tides_delta}" -ge "${one_hour_seconds}" ]]
+        then
+            error_exit 'ERROR: tides has not updated in more than 1 hour'
+        fi
     fi
 }
 
