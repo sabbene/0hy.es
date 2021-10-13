@@ -1,12 +1,8 @@
-FROM alpine:3
+FROM alpine:latest
 
-RUN apk upgrade --no-cache && \
-    apk add --no-cache perl~=5.32   perl-dev~=5.32    perl-app-cpanminus~=1 \
-                       nginx~=1.20  curl=~7           wget~=1 \
-                       make~=4.3    gcc~=10.3         libc-dev~=0.7 \
-                       openssl~=1.1 libressl-dev~=3.3 zlib~=1 \
-                       zlib-dev~=1 && \
-    cpanm Carton
+RUN apk update && apk upgrade
+RUN apk add perl perl-dev perl-app-cpanminus nginx curl wget make gcc libc-dev openssl libressl-dev zlib zlib-dev
+RUN cpanm Carton
 
 ## build tides app dependencies
 RUN mkdir -p /app/src/tides/
@@ -20,5 +16,6 @@ WORKDIR /app
 COPY ./app /app/
 
 EXPOSE 80
+EXPOSE 443
 
-CMD ["/app/bin/start.sh"]
+CMD /app/bin/start.sh
