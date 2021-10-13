@@ -1,4 +1,6 @@
 #!/bin/sh
+# aline sh is not sh.  All the shell critic suggestions for this do not work on alpine.
+# shellcheck disable=SC2003
 set -e
 
 PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
@@ -22,7 +24,7 @@ tides_checks() {
         tides_html_ctime=$(stat -c '%Y' "${tides_html_file}")
         tides_delta=$(expr "${now}" - "${tides_html_ctime}")
 
-        if [[ "${tides_delta}" -ge "${one_hour_seconds}" ]]
+        if [ "${tides_delta}" -ge "${one_hour_seconds}" ]
         then
             error_exit 'ERROR: tides has not updated in more than 1 hour'
         fi
