@@ -1,7 +1,7 @@
-FROM alpine:latest
+FROM alpine:3
 
-RUN apk update && apk upgrade
-RUN apk add perl perl-dev perl-app-cpanminus nginx curl wget make gcc libc-dev openssl libressl-dev zlib zlib-dev
+RUN apk upgrade --no-cache
+RUN apk add --no-cache perl perl-dev perl-app-cpanminus nginx curl wget make gcc libc-dev openssl libressl-dev zlib zlib-dev
 RUN cpanm Carton
 
 ## build tides app dependencies
@@ -16,6 +16,5 @@ WORKDIR /app
 COPY ./app /app/
 
 EXPOSE 80
-EXPOSE 443
 
-CMD /app/bin/start.sh
+CMD [/app/bin/start.sh]
