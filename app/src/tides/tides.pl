@@ -322,14 +322,23 @@ for my $location ( keys %forcast_locations ) {
 
 print <<EOF;
 <style>
+body {
+  color: #ddd;
+  background-color: #333;
+  link-color: rgb(0, 188, 212);
+  main-headline-color: rgb(233, 30, 99);
+  accent-background-color: rgb(0, 188, 212);
+  accent-color: rgb(5, 5, 5);
+}
 table, th, td {
-    border: 1px solid black;
+    border: 1px solid grey;
     border-collapse: collapse;
 }
 th, td {
     padding: 5px;
     text-align: left;
 }
+
 </style>
 <title>tides</title>
 
