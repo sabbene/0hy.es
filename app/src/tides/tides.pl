@@ -79,7 +79,9 @@ sub curl_get {
     }
     elsif ( ( !$res->is_success ) and ( $retry_counter <= 5 ) ) {
         $retry_counter++;
+        sleep $retry_counter;
         curl_get( $url, $retry_counter );
+        return;
     }
     elsif ( ( !$res->is_success ) and ( $retry_counter > 5 ) ) {
         my $err = sprintf '%d %s after %d attempts', $res->code, $res->message,
@@ -87,8 +89,6 @@ sub curl_get {
         return 'nil', $err;
     }
 
-    pp 'you should never see this';
-    pp $res;
     return 'nil', 'you should never see this';
 }
 
