@@ -77,11 +77,11 @@ sub curl_get {
     if ( $res->is_success ) {
         return $json->decode( $res->body ), 'nil';
     }
-    elsif (( ! $res->is_success ) and ( $retry_counter <= 5 )) {
+    elsif ( ( !$res->is_success ) and ( $retry_counter <= 5 ) ) {
         $retry_counter++;
         curl_get( $url, $retry_counter );
     }
-    elsif (( ! $res->is_success ) and ( $retry_counter > 5 )) {
+    elsif ( ( !$res->is_success ) and ( $retry_counter > 5 ) ) {
         my $err = sprintf '%d %s after %d attempts', $res->code, $res->message,
           $retry_counter;
         return 'nil', $err;
