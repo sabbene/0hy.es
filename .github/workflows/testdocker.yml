@@ -20,7 +20,11 @@ jobs:
       -
         name: Build
         run: |
-          docker build -t ${{ github.repository }} . 
+          docker build -t ${{ github.repository }} --load . 
+      -
+        name: imageList
+        run: |
+          docker image ls
       -
         name: Run
         run: |
