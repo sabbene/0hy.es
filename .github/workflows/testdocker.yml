@@ -28,7 +28,7 @@ jobs:
       -
         name: Run
         run: |
-          docker run -d -p8080:80 ${{ github.repository }}
+          docker run -d ${{ github.repository }}
       -
         name: dockerPS
         run: |
@@ -40,8 +40,8 @@ jobs:
       -
         name: testTides
         run: |
-          curl -L http://127.0.0.1:8080/tides | grep UPDATED
+          curl -L http://127.0.0.1/tides | grep UPDATED
       -
         name: testMainPage
         run: |
-          curl -L http://127.0.0.1:8080 | grep -w 0hy.es
+          curl -L http://127.0.0.1 | grep -w 0hy.es
