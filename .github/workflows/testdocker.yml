@@ -1,8 +1,5 @@
-name: CI-dev-pipeline
+name: BuildTest0hy.esContainer
 on:
-  # Triggers the workflow on push or pull request events but only for the develop branch
-  push:
-    branches: [ dev, stage ]
   pull_request:
     branches: [ stage ]
 jobs:
