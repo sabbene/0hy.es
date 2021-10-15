@@ -8,6 +8,7 @@
 [![Perl Tidy](https://github.com/sabbene/0hy.es/actions/workflows/perltidy.yml/badge.svg?branch=stage)](https://github.com/sabbene/0hy.es/actions/workflows/perltidy.yml)
 [![Super Linter](https://github.com/sabbene/0hy.es/actions/workflows/superlinter.yml/badge.svg?branch=stage)](https://github.com/sabbene/0hy.es/actions/workflows/superlinter.yml)
 [![Anchore Container Scan](https://github.com/sabbene/0hy.es/actions/workflows/anchore-analysis.yml/badge.svg?branch=stage)](https://github.com/sabbene/0hy.es/actions/workflows/anchore-analysis.yml)
+[![BuildTest0hy.esContainer](https://github.com/sabbene/0hy.es/actions/workflows/testdocker.yml/badge.svg)](https://github.com/sabbene/0hy.es/actions/workflows/testdocker.yml)
 
 ## Dev branch action statuses
 [![Perl Tidy](https://github.com/sabbene/0hy.es/actions/workflows/perltidy.yml/badge.svg?branch=dev)](https://github.com/sabbene/0hy.es/actions/workflows/perltidy.yml)
