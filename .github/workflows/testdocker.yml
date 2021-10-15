@@ -28,7 +28,7 @@ jobs:
       -
         name: Run
         run: |
-          docker run -d ${{ github.repository }}
+          docker run -d -p80:80 ${{ github.repository }}
       -
         name: dockerPS
         run: |
