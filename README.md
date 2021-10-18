@@ -1,4 +1,6 @@
 # 0hy.es
+git repo for google cloud run to build 0hy.es from
+
 ## Master branch action statuses
 [![Perl Tidy](https://github.com/sabbene/0hy.es/actions/workflows/perltidy.yml/badge.svg?branch=master)](https://github.com/sabbene/0hy.es/actions/workflows/perltidy.yml)
 [![Super Linter](https://github.com/sabbene/0hy.es/actions/workflows/superlinter.yml/badge.svg?branch=master)](https://github.com/sabbene/0hy.es/actions/workflows/superlinter.yml)
@@ -14,19 +16,22 @@
 [![Perl Tidy](https://github.com/sabbene/0hy.es/actions/workflows/perltidy.yml/badge.svg?branch=dev)](https://github.com/sabbene/0hy.es/actions/workflows/perltidy.yml)
 [![Super Linter](https://github.com/sabbene/0hy.es/actions/workflows/superlinter.yml/badge.svg?branch=dev)](https://github.com/sabbene/0hy.es/actions/workflows/superlinter.yml)
 
-git repo for google cloud run to build 0hy.es from
-
 ## tides.pl
 
 Terrible Perl to get noaa weather and tides for fishing spots.
 
 ## Handy Commands
+### Interactive container
+<pre>
+docker build -t 0hy.es . && docker run -it -v /Users/sabbene/git/0hy.es:/tmp/ --net=host -e TZ=America/Los_Angeles 0hy.es sh
+</pre>
+
 ### Perl Tidy
 <pre>
-docker build -t 0hy.es . && docker run -it -v /Users/sabbene/git/0hy.es:/tmp/ --net=host 0hy.es sh -c "cd /app/src/tides/local/bin && carton run ./perltidy -b -bext=\'/\' /tmp/app/src/tides/tides.pl"
+docker build -t 0hy.es . && docker run -it -v /Users/sabbene/git/0hy.es:/tmp/ --net=host -e TZ=America/Los_Angeles 0hy.es sh -c "cd /app/src/tides/local/bin && carton run ./perltidy -b -bext=\'/\' /tmp/app/src/tides/tides.pl"
 </pre>
 
 ### Perl Critic
 <pre>
-docker build -t 0hy.es . && docker run -it -v /Users/sabbene/git/0hy.es:/tmp/ --net=host 0hy.es sh -c "cd /app/src/tides/local/bin && carton run ./perlcritic --brutal /tmp/app/src/tides/tides.pl"
+docker build -t 0hy.es . && docker run -it -v /Users/sabbene/git/0hy.es:/tmp/ --net=host -e TZ=America/Los_Angeles 0hy.es sh -c "cd /app/src/tides/local/bin && carton run ./perlcritic --brutal /tmp/app/src/tides/tides.pl"
 </pre>

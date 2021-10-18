@@ -5,7 +5,7 @@ RUN apk upgrade --no-cache && \
                        nginx~=1.20  curl=~7           wget~=1 \
                        make~=4.3    gcc~=10.3         libc-dev~=0.7 \
                        openssl~=1.1 libressl-dev~=3.3 zlib~=1 \
-                       zlib-dev~=1 && \
+                       zlib-dev~=1  tzdata>=2000      && \
     cpanm Carton
 
 ## build tides app dependencies
