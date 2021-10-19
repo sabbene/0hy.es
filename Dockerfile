@@ -9,7 +9,7 @@ RUN apk upgrade --no-cache && \
                        zlib-dev~=1  tzdata~=2021
 
 ## Install perl dependencies
-RUN cpanm Carton Perl::Critic Perl::Tidy
+RUN cpanm install Carton
 
 ## build tides app dependencies
 RUN mkdir -p /app/src/tides/
