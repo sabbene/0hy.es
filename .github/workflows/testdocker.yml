@@ -25,7 +25,7 @@ jobs:
       -
         name: Run
         run: |
-          docker run -d -p80:80 ${{ github.repository }}
+          docker run -d -e TZ=America/Los_Angeles -p80:80 ${{ github.repository }}
       -
         name: dockerPS
         run: |
