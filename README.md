@@ -28,10 +28,10 @@ docker build -t 0hy.es . && docker run -it -v /Users/sabbene/git/0hy.es:/tmp/ --
 
 ### Perl Tidy
 <pre>
-docker build -t 0hy.es . && docker run -it -v /Users/sabbene/git/0hy.es:/tmp/ --net=host -e TZ=America/Los_Angeles 0hy.es sh -c "cd /app/src/tides/local/bin && carton run ./perltidy -b -bext=\'/\' /tmp/app/src/tides/tides.pl"
+docker build -t 0hy.es . && docker run -it -v /Users/sabbene/git/0hy.es:/tmp/ --net=host -e TZ=America/Los_Angeles 0hy.es sh -c 'perltidy -b -bext="/" /tmp/app/src/tides/tides.pl'
 </pre>
 
 ### Perl Critic
 <pre>
-docker build -t 0hy.es . && docker run -it -v /Users/sabbene/git/0hy.es:/tmp/ --net=host -e TZ=America/Los_Angeles 0hy.es sh -c "cd /app/src/tides/local/bin && carton run ./perlcritic --brutal /tmp/app/src/tides/tides.pl"
+docker build -t 0hy.es . && docker run -it -v /Users/sabbene/git/0hy.es:/tmp/ --net=host -e TZ=America/Los_Angeles 0hy.es sh -c 'perlcritic /tmp/app/src/tides/tides.pl'
 </pre>
