@@ -71,6 +71,8 @@ sub curl_get {
     my $retry_counter = shift || 0;
 
     my $ua = Mojo::UserAgent->new;
+    $ua->transactor->name('tides.0hy.es -- sabbene@0hy.es');
+
 
     my $res = $ua->max_redirects(5)->get($url)->result;
 
