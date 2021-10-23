@@ -1,13 +1,11 @@
-#!/usr/bin/env perl
+package Ohyes::Tides;
 
 use strict;
 use warnings;
 
 our $VERSION = 1.0;
 
-use JSON;
-
-#use WWW::Curl::Easy;
+use JSON::MaybeXS;
 use Mojo::UserAgent;
 use Data::Dump qw(pp);
 
@@ -73,7 +71,6 @@ sub curl_get {
     my $ua = Mojo::UserAgent->new;
     $ua->transactor->name('tides.0hy.es -- sabbene@0hy.es');
 
-
     my $res = $ua->max_redirects(5)->get($url)->result;
 
     if ( $res->is_success ) {
@@ -82,10 +79,12 @@ sub curl_get {
     elsif ( ( !$res->is_success ) and ( $retry_counter <= 5 ) ) {
         $retry_counter++;
         sleep $retry_counter;
-        curl_get( $url, $retry_counter );
-        return;
+        return curl_get( $url, $retry_counter );
     }
     elsif ( ( !$res->is_success ) and ( $retry_counter > 5 ) ) {
+        pp 'res-code: ' . $res->code;
+        pp 'message: ' . $res->message;
+        pp 'count: ' . $retry_counter;
         my $err = sprintf '%d %s after %d attempts', $res->code, $res->message,
           $retry_counter;
         return 'nil', $err;
@@ -314,96 +313,18 @@ sub get_alerts {
     return;
 }
 
-for my $location ( keys %forcast_locations ) {
-    get_urls($location);
-    get_forecast($location);
-    get_current($location);
-    get_tides_forecast($location);
-    get_alerts($location);
-}
-
-print <<EOF;
-<!DOCTYPE html>
-<style>
-body {
-  color: #ddd;
-  background-color: #333;
-}
-a {
-  color: #9E9EFF;
-}
-a:visited{
-  color: #D0ADF0;
-}
-table, th, td {
-    border: 1px solid grey;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 5px;
-    text-align: left;
-}
-
-</style>
-<title>tides</title>
-
-<table style="width:100%">
-EOF
-
-for my $loc ( keys %forcast_locations ) {
-
-    print <<EOF;
-<tr>
-    <th colspan="4"><a href="$forcast_locations{$loc}->{noaa_url}">$forcast_locations{$loc}->{name}</a></th>
-</tr>
-<tr>
-    <th><img src="$forcast_locations{$loc}->{forcast}->{icon}"</th>
-    <td colspan="4">$forcast_locations{$loc}->{forcast}->{name}: $forcast_locations{$loc}->{forcast}->{detailedForecast}</td>
-</tr>
-<tr>
-    <th>Current conditions</th>
-    <td colspan="4">$forcast_locations{$loc}->{current}->{detailed}</td>
-</tr>
-<tr>
-EOF
-    print '    <th rowspan="'
-      . scalar @{ $forcast_locations{$loc}->{tide_forcast} }
-      . '">Tides</th>';
-    for my $tide_data ( @{ $forcast_locations{$loc}->{tide_forcast} } ) {
-        print <<EOF;
-    <th>$tide_data->{t}</th>
-    <td>$tide_data->{type}: $tide_data->{v} feet</td>
-</tr>
-EOF
+sub get_forecasts {
+    for my $location ( keys %forcast_locations ) {
+        get_urls($location);
+        get_forecast($location);
+        get_current($location);
+        get_tides_forecast($location);
+        get_alerts($location);
     }
-    print <<EOF;
-<tr>
-EOF
-    print '    <th rowspan="'
-      . scalar @{ $forcast_locations{$loc}->{alerts} }
-      . '">Alerts</th>';
-    for my $alert ( @{ $forcast_locations{$loc}->{alerts} } ) {
-        print <<EOF;
-    <td colspan="4">@{$alert}</td></tr>
-EOF
-    }
-    print <<EOF;
-</tr>
-<tr>
-    <td colspan="4"></th>
-</tr>
-EOF
-}
 
-print '</table>' . "\n";
+    my %data = ( forecasts => {%forcast_locations} );
 
-for my $loc ( keys %forcast_locations ) {
-    for my $key ( grep /err/smx, %{ $forcast_locations{$loc} } ) {
-        print $loc. ' - '
-          . $key . ': '
-          . $forcast_locations{$loc}->{$key}
-          . "<br>\n";
-    }
+    return \%data;
 }
 
 ##partial base_url_output
@@ -440,3 +361,5 @@ for my $loc ( keys %forcast_locations ) {
 #    { t => "2018-08-14 19:39", type => "L", v => 1.513 },
 #    { t => "2018-08-15 01:35", type => "H", v => 4.889 },
 #  ],
+
+1;

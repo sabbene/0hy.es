@@ -1,0 +1,7 @@
+requires 'Data::Dump';
+requires 'DateTime';
+requires 'IO::Socket::SSL';
+requires 'JSON::MaybeXS';
+requires 'Mojo::UserAgent';
+requires 'Storable';
+requires 'YAML';
