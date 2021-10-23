@@ -26,6 +26,7 @@ Terrible Perl to get noaa weather and tides for fishing spots.
 docker build -t 0hy.es . && docker run -it -v /Users/sabbene/git/0hy.es:/tmp/ --net=host -e TZ=America/Los_Angeles 0hy.es sh
 </pre>
 
+### These commands don't work anymore.  Need to find replacements
 ### Perl Tidy
 <pre>
 docker build -t 0hy.es . && docker run -it -v /Users/sabbene/git/0hy.es:/tmp/ --net=host -e TZ=America/Los_Angeles 0hy.es sh -c 'cpanm install Perl::Tidy; perltidy -b -bext="/" /tmp/app/src/tides/tides.pl'

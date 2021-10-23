@@ -11,17 +11,19 @@ RUN apk upgrade --no-cache && \
 ## Install perl dependencies
 RUN cpanm install Carton
 
-## build tides app dependencies
-RUN mkdir -p /app/src/tides/
+## build 0hy.es dependencies
+RUN mkdir -p /app/src/0hy.es
 
-WORKDIR /app/src/tides/
-COPY ./app/src/tides/cpanfile* /app/src/tides/
+WORKDIR /app/src/0hy.es
+COPY /app/src/0hy.es/cpanfile* /app/src/0hy.es/
 RUN carton install
 
 ## COPY everything else
 WORKDIR /app
 COPY ./app /app/
 
+
+WORKDIR /app/src/0hy.es
 EXPOSE 80
 
-CMD ["/app/bin/start.sh"]
+CMD ["carton", "run", "/app/src/0hy.es/script/ohyes", "prefork", "--listen", "http://*:80", "--mode", "production", "--workers", "2"]
