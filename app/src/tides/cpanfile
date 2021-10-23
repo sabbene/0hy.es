@@ -1,5 +1,0 @@
-requires 'Mojo::UserAgent';
-requires 'JSON';
-requires 'YAML';
-requires 'Data::Dump';
-requires 'IO::Socket::SSL';

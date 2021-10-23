@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<style>
+body {
+  color: #ddd;
+  background-color: #333;
+}
+a {
+  color: #9E9EFF;
+}
+a:visited{
+  color: #D0ADF0;
+}
+table, th, td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+
+</style>
+<title>tides</title>
+<table style="width:100%">
+<% for my $location ( sort keys %{$forecasts} ) { %>
+    
+    <%# Location header row %>
+    <tr>
+        <th colspan="4"><a href="<%= $forecasts->{$location}->{noaa_url} %>"><%= $forecasts->{$location}->{name} %></a></th>
+    </tr>
+
+    <%# Detailed forecast row %>
+    <tr>
+        <%# Forecast icon %>
+        <th><img src="<%= $forecasts->{$location}->{forcast}->{icon} %>"></th>
+
+        <%# Detailed forecast text %>
+        <% my $detailed_forecast = sprintf "%s: %s", $forecasts->{$location}->{forcast}->{name}, $forecasts->{$location}->{forcast}->{detailedForecast}; %>
+        <td colspan="4"><%= $detailed_forecast  %></td> 
+    </tr>
+
+    <%# Current conditions row %>
+    <tr>
+        <th>Current Conditions</th>
+        <td colspan="4"><%= $forecasts->{$location}->{current}->{detailed} %> </td>
+    </tr>
+
+    <%# Tides block %>
+    <tr>
+        <%# Get the number of tide forecasts and make title column span that number of rows %>
+        <% my $tides_row_span = scalar @{ $forecasts->{$location}->{tide_forcast} }; %>
+        <th rowspan="<%= $tides_row_span %>">Tides</th>
+
+        <%# Print each of the tide forecasts %>
+        <% for my $tide_data ( @{ $forecasts->{$location}->{tide_forcast} } ) { %>
+            <% my $tide_forecast_string = sprintf "%s: %s feet", $tide_data->{type}, $tide_data->{v}; %>
+            <th><%= $tide_data->{t} %></th>
+            <td><%= $tide_forecast_string %></td>
+            </tr>
+        <% } %>
+    </tr>
+
+    <%# alerts block %>
+    <tr>
+        <%# Get the number of alerts and make the title column span that number of rows %>
+        <% my $alerts_row_span = scalar @{ $forecasts->{$location}->{alerts} }; %>
+        <th rowspan="<%= $alerts_row_span %>">Alerts</th>
+
+        <% for my $alert ( @{ $forecasts->{$location}->{alerts} } ) { %>
+            <td colspan="4">
+                <% for my $alert_element ( @{ $alert } ) { %>
+                    <%= $alert_element %>
+                <% } %>
+            </td>
+            </tr>
+        <% } %>
+
+    <tr><td colspan="4"></th></tr>
+
+<% } %>
+<tr>
+    <th>Updated</th>
+    <td colspan="4"><%= $updated_time %></td>
+</tr>
+</table>
