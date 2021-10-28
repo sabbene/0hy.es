@@ -62,6 +62,13 @@ my %forcast_locations = (
         noaa_url =>
           'http://marine.weather.gov/MapClick.php?lat=37.3231&lon=-122.4008',
     },
+    moss_landing => {
+        name => 'Moss Landing',
+        base_url => 'https://api.weather.gov/points/36.7921,-121.7922',
+        tide_forcast_url => 'https://tidesandcurrents.noaa.gov/api/datagetter?station=9413450&range=24&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&format=json&interval=hilo',
+        alerts_url => 'https://api.weather.gov//alerts?active=1&point=36.7921,-121.7922',
+        noaa_url => 'http://marine.weather.gov/MapClick.php?lat=36.7921&lon=-121.7922',
+    },
 );
 
 sub curl_get {
