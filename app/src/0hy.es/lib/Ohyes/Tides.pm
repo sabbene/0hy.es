@@ -18,14 +18,12 @@ my $dt = DateTime->now(
 
 my $tide_begin_date = sprintf '%04d%02d%02d', $dt->year, $dt->month, $dt->day;
 
-pp $tide_begin_date;
-
 my %forcast_locations = (
     santa_cruz => {
         name             => 'Santa Cruz',
         base_url         => 'https://api.weather.gov/points/36.9561,-122.012',
         tide_forcast_url =>
-"https://tidesandcurrents.noaa.gov/api/datagetter?station=9413745&range=36&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&format=json&interval=hilo&begin_date=$tide_begin_date",
+"https://tidesandcurrents.noaa.gov/api/datagetter?station=9413745&range=36&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&format=json&interval=hilo&begin_date=$tide_begin_date&application=tides.0hy.es%20--%20sabbene%400hy.es",
         alerts_url =>
           'https://api.weather.gov//alerts?active=1&point=36.9561,-122.012',
         noaa_url =>
@@ -35,7 +33,7 @@ my %forcast_locations = (
         name             => 'Elkhorn Slough',
         base_url         => 'https://api.weather.gov/points/36.8,-121.79',
         tide_forcast_url =>
-"https://tidesandcurrents.noaa.gov/api/datagetter?station=9413623&range=36&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&format=json&interval=hilo&begin_date=$tide_begin_date",
+"https://tidesandcurrents.noaa.gov/api/datagetter?station=9413623&range=36&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&format=json&interval=hilo&begin_date=$tide_begin_date&application=tides.0hy.es%20--%20sabbene%400hy.es",
         alerts_url =>
           'https://api.weather.gov//alerts?active=1&point=36.80,-121.79',
         noaa_url =>
@@ -45,7 +43,7 @@ my %forcast_locations = (
         name             => 'Panther Beach',
         base_url         => 'https://api.weather.gov/points/36.9928,-122.1701',
         tide_forcast_url =>
-"https://tidesandcurrents.noaa.gov/api/datagetter?station=9413878&range=36&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&format=json&interval=hilo&begin_date=$tide_begin_date",
+"https://tidesandcurrents.noaa.gov/api/datagetter?station=9413878&range=36&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&format=json&interval=hilo&begin_date=$tide_begin_date&application=tides.0hy.es%20--%20sabbene%400hy.es",
         alerts_url =>
           'https://api.weather.gov//alerts?active=1&point=36.9928,-122.1701',
         noaa_url =>
@@ -55,7 +53,7 @@ my %forcast_locations = (
         name             => 'Dumbarton Bridge',
         base_url         => 'https://api.weather.gov/points/37.5055,-122.1181',
         tide_forcast_url =>
-"https://tidesandcurrents.noaa.gov/api/datagetter?station=9414509&range=36&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&format=json&interval=hilo&begin_date=$tide_begin_date",
+"https://tidesandcurrents.noaa.gov/api/datagetter?station=9414509&range=36&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&format=json&interval=hilo&begin_date=$tide_begin_date&application=tides.0hy.es%20--%20sabbene%400hy.es",
         alerts_url =>
           'https://api.weather.gov//alerts?active=1&point=37.5055,-122.1181',
         noaa_url =>
@@ -65,7 +63,7 @@ my %forcast_locations = (
         name             => 'San Gregorio',
         base_url         => 'https://api.weather.gov/points/37.3231,-122.4008',
         tide_forcast_url =>
-"https://tidesandcurrents.noaa.gov/api/datagetter?station=9413450&range=36&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&format=json&interval=hilo&begin_date=$tide_begin_date",
+"https://tidesandcurrents.noaa.gov/api/datagetter?station=9413450&range=36&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&format=json&interval=hilo&begin_date=$tide_begin_date&application=tides.0hy.es%20--%20sabbene%400hy.es",
         alerts_url =>
           'https://api.weather.gov//alerts?active=1&point=37.3231,-122.4008',
         noaa_url =>
@@ -74,7 +72,7 @@ my %forcast_locations = (
     moss_landing => {
         name => 'Moss Landing',
         base_url => 'https://api.weather.gov/points/36.7921,-121.7922',
-        tide_forcast_url => "https://tidesandcurrents.noaa.gov/api/datagetter?station=9413450&range=36&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&format=json&interval=hilo&begin_date=$tide_begin_date",
+        tide_forcast_url => "https://tidesandcurrents.noaa.gov/api/datagetter?station=9413450&range=36&product=predictions&datum=mllw&units=english&time_zone=lst_ldt&format=json&interval=hilo&begin_date=$tide_begin_date&application=tides.0hy.es%20--%20sabbene%400hy.es",
         alerts_url => 'https://api.weather.gov//alerts?active=1&point=36.7921,-121.7922',
         noaa_url => 'http://marine.weather.gov/MapClick.php?lat=36.7921&lon=-121.7922',
     },
